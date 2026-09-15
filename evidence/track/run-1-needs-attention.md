@@ -65,3 +65,10 @@ Transcribed from the Thally Cloud Track page (site 3e6b592b-a760-44f9-ba4d-e8fa1
 - We paused Track, reverted with #13 (merge d0de7ee), resumed, and re-landed unchanged as #14 (merge 537934a6ac41e4a70805578aaca44d64899824d9, 2026-09-15T18:26:09Z).
 - Result: attempt 1 of 3, Needs attention. "Track service · Stopped while writing the update." Reference 70317f78-7c78-495b-a739-2e19c768db1e. 10.2K credits used.
 - No pull request created in vaibhav700c/gitlite-docs.
+
+# Ninth Track attempt (vaibhav700c/gitlite#16)
+
+- Thally support said the #14 run reused a stale sandbox image that still had the 10-minute limit while the new image was building. They reported the rebuild complete and credits reset to 30K+.
+- We paused Track, reverted with #15 (merge 12449bc), resumed, and re-landed unchanged as #16 (merge c8902075caabe45697a9999dff0f9f022c0d8a1c, 2026-09-15T19:45:52Z).
+- Result: attempt 1 of 3, Needs attention. "Track service · Stopped while writing the update." Reference cafbfbb9-5840-4d04-8c10-35f4d94d7cce. 14.9K credits used.
+- No pull request was created in vaibhav700c/gitlite-docs.
