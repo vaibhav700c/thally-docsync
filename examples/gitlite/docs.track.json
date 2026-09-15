@@ -1,0 +1,15 @@
+{
+  "repos": [
+    {
+      "owner": "vaibhav700c",
+      "repo": "gitlite",
+      "paths": [
+        "services/auth",
+        "modules/setting",
+        "routers/api",
+        "templates/swagger",
+        "custom/conf"
+      ]
+    }
+  ]
+}

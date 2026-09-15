@@ -1,0 +1,39 @@
+# captured 2026-09-14T20:49:01Z against feature/bearer-auth-deprecation binary
+$ curl -si -H "Authorization: token $T" localhost:3000/api/v1/user
+HTTP/1.1 200 OK
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json;charset=utf-8
+Deprecation: true
+Sunset: Wed, 01 Apr 2026 00:00:00 GMT
+Warning: 299 - "The 'token' authorization scheme is deprecated; use 'Authorization: Bearer <token>'"
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Date: Mon, 14 Sep 2026 20:49:01 GMT
+Content-Length: 526
+
+$ curl -si -H "Authorization: Bearer $T" localhost:3000/api/v1/user
+HTTP/1.1 200 OK
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json;charset=utf-8
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Date: Mon, 14 Sep 2026 20:49:01 GMT
+Content-Length: 526
+
+$ curl -s localhost:3000/api/v1/settings/api
+{"max_response_items":25,"default_paging_num":20,"default_git_trees_per_page":1000,"default_max_blob_size":10485760,"default_max_response_size":104857600}
+$ curl -si -H "Authorization: Bearer $T" localhost:3000/api/v1/user/repos
+HTTP/1.1 200 OK
+Access-Control-Expose-Headers: Link, X-Page, X-PerPage, X-HasMore, X-Total-Count
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json;charset=utf-8
+Link: <http://localhost:3000/api/v1/user/repos?page=2>; rel="next",<http://localhost:3000/api/v1/user/repos?page=2>; rel="last"
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Hasmore: true
+X-Page: 1
+X-Perpage: 20
+X-Total-Count: 35
+Date: Mon, 14 Sep 2026 20:49:01 GMT
+Transfer-Encoding: chunked
+

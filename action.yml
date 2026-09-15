@@ -1,0 +1,33 @@
+name: "Docsync verify examples"
+description: "Run a Thally docs site's embedded code samples against an already-running product server and fail the job if any regress."
+inputs:
+  config:
+    description: "Path to docsync.config.json"
+    required: false
+    default: "docsync.config.json"
+  label:
+    description: "Report label (used in the output filename)"
+    required: false
+    default: "ci"
+  env-file:
+    description: "Optional path to a shell-format env file to source before running (e.g. GITLITE_TOKEN=...). Never echoed."
+    required: false
+    default: ""
+runs:
+  using: "composite"
+  steps:
+    - name: Run example verification
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ -n "${{ inputs.env-file }}" ]; then
+          if [ ! -f "${{ inputs.env-file }}" ]; then
+            echo "env-file not found: ${{ inputs.env-file }}" >&2
+            exit 1
+          fi
+          set -a
+          # shellcheck disable=SC1090
+          source "${{ inputs.env-file }}"
+          set +a
+        fi
+        node "${{ github.action_path }}/bin/verify-examples.mjs" "${{ inputs.label }}" --config "${{ inputs.config }}"
