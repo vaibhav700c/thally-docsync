@@ -78,6 +78,11 @@ echo "==> $thally_bin track setup --repo $docs_owner_repo --write"
 ( cd "$docs_path" && "$thally_bin" track setup --repo "$docs_owner_repo" --write )
 
 sender_file="$docs_path/thally-track-sender-${product_repo}.yml"
+# thally track setup writes directory paths verbatim ('src/api'), but GitHub's
+# on.pull_request.paths filter only matches files inside a directory with 'src/api/**'.
+if [ -f "$sender_file" ]; then
+  sed -E -i.bak "s#^( +- ')([^'*]*/)?([^'*./]+)'\$#\1\2\3/**'#" "$sender_file" && rm -f "$sender_file.bak"
+fi
 echo
 echo "-----------------------------------------------------------------"
 echo "Next steps:"

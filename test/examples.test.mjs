@@ -39,7 +39,8 @@ test('skipIfContains skips placeholder samples', () => {
 })
 
 test('allowedStatuses permits documented error codes for a page', () => {
-  const config = mergeConfig({})
+  assert.deepEqual(mergeConfig({}).allowedStatuses, {})
+  const config = mergeConfig({ allowedStatuses: { 'guides/errors': [401, 404] } })
   assert.equal(decide({ exitCode: 0, statuses: [401], page: 'guides/errors', config }), true)
   assert.equal(decide({ exitCode: 0, statuses: [401], page: 'quickstart', config }), false)
 })

@@ -18,16 +18,22 @@ runs:
   steps:
     - name: Run example verification
       shell: bash
+      env:
+        # Inputs pass through env, never expanded into the script, to avoid shell injection.
+        DOCSYNC_CONFIG: ${{ inputs.config }}
+        DOCSYNC_LABEL: ${{ inputs.label }}
+        DOCSYNC_ENV_FILE: ${{ inputs.env-file }}
+        DOCSYNC_BIN: ${{ github.action_path }}/bin/verify-examples.mjs
       run: |
         set -euo pipefail
-        if [ -n "${{ inputs.env-file }}" ]; then
-          if [ ! -f "${{ inputs.env-file }}" ]; then
-            echo "env-file not found: ${{ inputs.env-file }}" >&2
+        if [ -n "$DOCSYNC_ENV_FILE" ]; then
+          if [ ! -f "$DOCSYNC_ENV_FILE" ]; then
+            echo "env-file not found: $DOCSYNC_ENV_FILE" >&2
             exit 1
           fi
           set -a
           # shellcheck disable=SC1090
-          source "${{ inputs.env-file }}"
+          source "$DOCSYNC_ENV_FILE"
           set +a
         fi
-        node "${{ github.action_path }}/bin/verify-examples.mjs" "${{ inputs.label }}" --config "${{ inputs.config }}"
+        node "$DOCSYNC_BIN" "$DOCSYNC_LABEL" --config "$DOCSYNC_CONFIG"

@@ -42,10 +42,12 @@ flowchart TD
    bin/attach.sh <product-owner/repo> <path-to-docs-repo-checkout> \
      --paths "src/**,openapi.yaml" --branch main
    ```
-3. Copy the printed `thally-track-sender-<repo>.yml` into the product repo as `.github/workflows/thally-track.yml`.
+3. Copy the printed `thally-track-sender-<repo>.yml` into the product repo as `.github/workflows/thally-track.yml`. `attach.sh` has already rewritten directory filters such as `'src/api'` to `'src/api/**'`; `thally track setup` emits bare directories, which GitHub's `paths` filter never matches.
 4. Add the two secrets `attach.sh` prints:
    - **`ANTHROPIC_API_KEY`** in the **docs repo** — consumed by `thally-agent.yml` to run the docs agent (`dist/index.js:363`).
-   - **`THALLY_DISPATCH_TOKEN`** in the **product repo** — a token with dispatch access to the docs repo, consumed by the sender workflow (`dist/index.js:569`).
+   - **`THALLY_DISPATCH_TOKEN`** in the **product repo** — a fine-grained personal access token scoped to the docs repo with **Contents: Read and write** (required by the `repository_dispatch` API), consumed by the sender workflow (`dist/index.js:569`).
+
+   Then, in the docs repo, enable **Settings → Actions → General → Allow GitHub Actions to create and approve pull requests**, or add a `THALLY_AGENT_TOKEN` secret, so the agent can open its PR.
 
 From there: merge a product PR → sender workflow dispatches → `thally-agent.yml` runs `thally agent ... --pr` → docs PR opens for human review.
 
@@ -56,6 +58,10 @@ Once the docs site is deployed, wire `bin/verify-examples.mjs` (directly, or via
 `verify-examples.mjs` runs the docs site's `curl`/`fetch` samples against a live server and checks they still return 2xx (or an explicitly allowed status). That only proves the *examples still execute* — it says nothing about whether the *text around them* still matches reality. A field can be renamed, a default can change, a header can shift from `Authorization: token` to `Authorization: Bearer`, and every sample can keep passing because the code never asserts on prose.
 
 That's exactly what happened in this project's own dry run: [`evidence/product/docs-examples-before.md`](evidence/product/docs-examples-before.md) and [`evidence/product/docs-examples-after-product-change.md`](evidence/product/docs-examples-after-product-change.md) both report **49/49 passed** — before and after a real product change that altered documented behavior (see [`evidence/product/feature-branch-curl.txt`](evidence/product/feature-branch-curl.txt)). The example suite alone was silent. Catching that kind of drift is what the Thally agent's PR-based doc rewrite (driven by the actual PR diff, not just by re-running samples) and `capture-surfaces.sh`'s surface snapshots are for — `verify-examples.mjs` is a regression net under that, not a replacement for it.
+
+## Hackathon submission
+
+Form answers, links, and disclosures: [SUBMISSION.md](SUBMISSION.md).
 
 ## Related repos
 

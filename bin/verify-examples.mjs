@@ -10,7 +10,7 @@
 //     "nav": "docs.json",
 //     "languages": ["bash", "js"],
 //     "requireCommand": { "bash": "curl" },
-//     "allowedStatuses": { "guides/errors": [401, 404] },
+//     "allowedStatuses": { "guides/errors": [401, 404] },   (default: {})
 //     "skipIfContains": ["<your"],
 //     "report": "verify/report-{label}.md"
 //   }
@@ -43,7 +43,7 @@ Config defaults (all overridable in docsync.config.json):
   nav              "docs.json"
   languages        ["bash", "js"]
   requireCommand   { "bash": "curl" }
-  allowedStatuses  { "guides/errors": [401, 404] }
+  allowedStatuses  {}   (e.g. { "guides/errors": [401, 404] })
   skipIfContains   ["<your"]
   report           "verify/report-{label}.md"
 `)
