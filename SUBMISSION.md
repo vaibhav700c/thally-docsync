@@ -77,3 +77,16 @@ Useful in general: `[AFTER TRACK RUN]`
 > The part that surprised me: all 49 code examples in the docs still passed after the change. Tests alone would never have flagged the stale pages.
 >
 > `[screenshot or video]` · `[live site link]` · https://github.com/vaibhav700c/thally-docsync
+
+## Video script (5 minutes or less)
+
+| Time | Show | Say |
+| --- | --- | --- |
+| 0:00–0:15 | kit README first paragraph | "GitLite is a fork of Gitea, an existing open-source project. What we built is the documentation system and the Thally Track integration." |
+| 0:15–0:50 | Live site: Quickstart, Authentication, Pagination | Docs written against the real product: `token` scheme, 30 per page. |
+| 0:50–1:20 | Terminal: `evidence/product/docs-examples-before.md` and `docs-examples-after-product-change.md` | 49/49 examples pass before and after the change, so tests alone never catch stale docs. |
+| 1:20–2:00 | Product PR diff (oauth2.go, setting/api.go, swagger) and merge | The loud change (auth scheme) and the quiet one (paging defaults). |
+| 2:00–2:20 | gitlite Actions tab: "Thally track dispatch" run, then gitlite-docs "Thally docs agent" run | How Track wires in with no hosted server. |
+| 2:20–3:40 | Track docs PR in the GitHub UI and its deploy preview | Accept, edit, and reject decisions, said out loud. Run `curl -si -H "Authorization: token $T"` and show the `Deprecation` header before approving. |
+| 3:40–4:20 | Split screen of the MCP `read_page authentication` result, before and after | The machine-readable docs that agents read were stale too, until the change went through review. |
+| 4:20–5:00 | Reflection | What Thally got right, what it missed or overstated, what was verified by hand. |
