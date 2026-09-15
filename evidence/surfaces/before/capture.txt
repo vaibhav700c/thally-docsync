@@ -1,0 +1,10 @@
+site: https://gitlite-docs.thally.app
+captured_at: 2026-09-15T06:45:07Z
+files:
+  - agent-readiness.json 381b266db101e326
+  - authentication.md 1a77d2a46a3e8ddf
+  - llms.txt 61f20f72f263250a
+  - mcp-read-authentication.json 3a163d3dbcfbede8
+  - mcp-read-pagination.json 34b945dfdd47ff61
+  - mcp-search.json 8fc2c24510a76907
+  - pagination.md b89ca52fd83a0543

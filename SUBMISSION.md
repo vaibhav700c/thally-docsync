@@ -12,7 +12,7 @@ Items marked `[TODO]` need a link or an action that only the team can provide. I
 | Code Repository | https://github.com/vaibhav700c/thally-docsync (the built system; links to the product and docs repos below) |
 | GitHub | Connect the account `vaibhav700c` in the form |
 | Demo Video | `[TODO]` Unlisted YouTube or Loom link, 5 minutes or less |
-| Live Project Link | `[TODO]` `https://<site>.thally.app` |
+| Live Project Link | https://gitlite-docs.thally.app |
 | Following Thally on X and LinkedIn | `[TODO]` Answer "yes" only after you actually follow both accounts |
 | Public post on X | `[TODO]` |
 | Public post on LinkedIn | `[TODO]` |
