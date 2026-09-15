@@ -51,3 +51,10 @@ Transcribed from the Thally Cloud Track page (site 3e6b592b-a760-44f9-ba4d-e8fa1
 - Observation: those 9 pages match our expected impact list. The control pages (introduction, guides/webhooks, guides/deployment) were not in its edit list. By contrast, the file-level `thally check --drift` flagged all three because `custom/conf/app.example.ini` and `NOTICE.md` also changed.
 - Kenny then granted 30K credits for a re-run.
 - Before the re-run, the docs were restructured (vaibhav700c/gitlite-docs@0291187) so the same update needs far fewer edits.
+
+# Sixth and seventh Track attempts (vaibhav700c/gitlite#10 and #12)
+
+- #10 (merge 6f17c6f, 2026-09-15T15:38:04Z): no Track run started. The product source had just been removed and re-added so path filters could be set (services/auth/**, modules/setting/**, services/context/**, routers/api/**, templates/swagger/**, custom/conf/**).
+- We paused Track, reverted with #11 (merge 98de2bc), resumed, and re-landed as #12 (merge 3639839c3dea61399514dcf4c4eb134cf18401a5, 2026-09-15T15:46:25Z). The docs had been restructured first (gitlite-docs@0291187), and Kenny had granted 30K credits.
+- Result for #12: attempt 1 of 3, Needs attention. "Track service · Stopped while writing the update." Reference 6694b3aa-1e74-4529-a5d4-87daf7e64e4e. 9.6K credits used.
+- No pull request was created in vaibhav700c/gitlite-docs.
