@@ -1,0 +1,54 @@
+# GitLite Docs
+
+> API documentation for GitLite, a Gitea fork
+
+- Documentation: https://gitlite-docs.thally.app
+- GitHub: https://github.com/vaibhav700c/gitlite-docs
+- Full docs for LLMs: https://gitlite-docs.thally.app/llms-full.txt
+- Agent discovery (ai.txt): https://gitlite-docs.thally.app/ai.txt
+- Structured docs index (JSON): https://gitlite-docs.thally.app/api/docs-index
+- OpenAPI spec: https://gitlite-docs.thally.app/openapi.yaml
+
+## For AI agents
+
+Every page supports content negotiation on its human URL:
+- JSON API: append `?format=json` or send `Accept: application/json`
+- JSON-LD: append `?format=ldjson` or send `Accept: application/ld+json`
+- Markdown: append `?format=md` or send `Accept: text/markdown`
+- Per-page API: https://gitlite-docs.thally.app/api/docs/{page-id}
+- Search API: https://gitlite-docs.thally.app/api/search?q={query}
+- Capability manifest (skill): https://gitlite-docs.thally.app/skill.md
+- Agent guidance (editing these docs): https://gitlite-docs.thally.app/AGENTS.md
+- MCP server (attach docs as native tools): https://gitlite-docs.thally.app/api/mcp
+- Agent readiness: https://gitlite-docs.thally.app/api/agent-readiness
+
+### Recommended workflow
+
+1. Use this index, the search API, or `search_docs` before choosing a page.
+2. Read the smallest set of relevant pages and follow their prerequisite links.
+3. Treat the published docs as the source of truth. Label inferences and say when evidence is missing.
+4. Cite the canonical human page URLs, not only API endpoints.
+5. Use `/AGENTS.md` before editing a repository. The public MCP server is read-only.
+
+## Documentation
+
+### Getting Started
+
+- [Introduction](https://gitlite-docs.thally.app/): GitLite is a self-hosted Git service with a REST API. Start here to find the right guide.
+- [Quickstart](https://gitlite-docs.thally.app/quickstart): Make your first authenticated GitLite API call and create a repository in about a minute.
+- [Authentication](https://gitlite-docs.thally.app/authentication): Authenticate with the GitLite API. Create access tokens, send them in the Authorization header, and choose token scopes.
+- [Pagination](https://gitlite-docs.thally.app/pagination): Read long lists from the GitLite API with page and limit, and use the Link, X-Total-Count, X-Page, X-PerPage, and X-HasMore headers.
+
+### Guides
+
+- [Guide: Handling errors](https://gitlite-docs.thally.app/guides/errors): Interpret GitLite API status codes, error bodies, and authentication failures, and decide when to retry.
+- [Guide: Rate limits and response size](https://gitlite-docs.thally.app/guides/rate-limits): Understand how GitLite caps page size and response size, and how to write clients that stay within those caps.
+- [Guide: Webhooks](https://gitlite-docs.thally.app/guides/webhooks): Receive HTTP callbacks from GitLite when events such as pushes and issue changes happen in a repository.
+- [Guide: Deployment](https://gitlite-docs.thally.app/guides/deployment): Build the GitLite binary from source and run it with SQLite for development or a small team.
+
+### Reference
+
+- [API reference: Repositories](https://gitlite-docs.thally.app/api/repositories): List, create, read, and update repositories with the GitLite REST API.
+- [API reference: Issues](https://gitlite-docs.thally.app/api/issues): List, create, read, and update repository issues with the GitLite REST API.
+- [API reference: Organizations](https://gitlite-docs.thally.app/api/organizations): List, create, and read organizations and their repositories with the GitLite REST API.
+- [Configuration reference: [api]](https://gitlite-docs.thally.app/reference/configuration-api): Every key in the [api] section of GitLite's app.ini, with its default and effect on API clients.

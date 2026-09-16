@@ -1,0 +1,114 @@
+---
+title: Pagination
+description: Read long lists from the GitLite API with page and limit, and use the Link, X-Total-Count, X-Page, X-PerPage, and X-HasMore headers.
+lastVerified: 2026-09-15
+verifiedVersion: GitLite 1.27.3
+---
+List endpoints return one page of results at a time. You choose the page with
+`page` and the page size with `limit`, and GitLite tells you how many items exist
+in response headers.
+
+## Query parameters
+
+| Parameter | Type | Default | Behavior |
+| --- | --- | --- | --- |
+| `page` | integer | `1` | 1-based page number. Values below `1` are treated as `1`. |
+| `limit` | integer | `20` | Items per page. Values of `0` or less use the default of `20`. Values above `25` are reduced to `25`. |
+
+The default (`20`) and the maximum (`25`) come from the server's
+`[api] DEFAULT_PAGING_NUM` and `[api] MAX_RESPONSE_ITEMS` settings. Operators can
+change them, so read the effective values from the server when it matters:
+
+#### curl
+
+    ```bash
+    curl -s http://localhost:3000/api/v1/settings/api \
+      -H "Authorization: $GITLITE_AUTH"
+    ```
+
+#### JavaScript
+
+    ```js
+    const res = await fetch('http://localhost:3000/api/v1/settings/api', {
+      headers: { Authorization: process.env.GITLITE_AUTH },
+    })
+    const { default_paging_num, max_response_items } = await res.json()
+    console.log({ default_paging_num, max_response_items })
+    ```
+
+On a server with default settings the response is:
+
+```json
+{
+  "max_response_items": 25,
+  "default_paging_num": 20,
+  "default_git_trees_per_page": 1000,
+  "default_max_blob_size": 10485760,
+  "default_max_response_size": 104857600
+}
+```
+
+> **Tip:**
+  A `limit` above the maximum does not return an error. GitLite silently returns
+  at most `25` items, so do not assume a short page means you reached the end.
+  Use the headers below instead.
+
+## Response headers
+
+| Header | Example | Meaning |
+| --- | --- | --- |
+| `X-Total-Count` | `35` | Total number of items across all pages. |
+| `X-Page` | `1` | The current 1-based page number. |
+| `X-PerPage` | `20` | The page size used for this response. |
+| `X-HasMore` | `true` | Whether more pages exist after the current one. |
+| `Link` | `<http://localhost:3000/api/v1/user/repos?page=2>; rel="next"` | URLs for the `next`, `last`, `first`, and `prev` pages. Relations that do not apply are omitted. |
+| `Access-Control-Expose-Headers` | `Link, X-Total-Count, X-Page, X-PerPage, X-HasMore` | Lets browser clients read the headers above. |
+
+`X-Total-Count` is set on list endpoints that count their results. `Link` is set
+only when there is more than one page. `X-Page`, `X-PerPage`, and `X-HasMore` are
+set on every paginated response.
+
+For example, a user with 35 repositories requesting `/user/repos` with no
+parameters receives 20 repositories and these headers:
+
+```text
+X-Total-Count: 35
+X-Page: 1
+X-PerPage: 20
+X-HasMore: true
+Link: <http://localhost:3000/api/v1/user/repos?page=2>; rel="next",<http://localhost:3000/api/v1/user/repos?page=2>; rel="last"
+```
+
+## Read every page
+
+Follow `rel="next"` until it is absent.
+
+#### curl
+
+    ```bash
+    curl -s -D - -o /dev/null "http://localhost:3000/api/v1/user/repos?page=1&limit=10" \
+      -H "Authorization: $GITLITE_AUTH"
+    ```
+
+#### JavaScript
+
+    ```js
+    let url = 'http://localhost:3000/api/v1/user/repos?limit=25'
+    const all = []
+    while (url) {
+      const res = await fetch(url, {
+        headers: { Authorization: process.env.GITLITE_AUTH },
+      })
+      all.push(...(await res.json()))
+      url = res.headers.get('link')?.match(/<([^>]+)>;\s*rel="next"/)?.[1]
+    }
+    console.log(`fetched ${all.length} repositories`)
+    ```
+
+The `curl` command prints only the response headers, so you can inspect
+`X-Total-Count` and `Link` directly.
+
+## Next steps
+
+- [Rate limits and response size](/guides/rate-limits) covers other server-side caps.
+- [Configuration: `[api]`](/reference/configuration-api) lists every setting that controls paging.

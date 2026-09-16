@@ -72,3 +72,17 @@ Transcribed from the Thally Cloud Track page (site 3e6b592b-a760-44f9-ba4d-e8fa1
 - We paused Track, reverted with #15 (merge 12449bc), resumed, and re-landed unchanged as #16 (merge c8902075caabe45697a9999dff0f9f022c0d8a1c, 2026-09-15T19:45:52Z).
 - Result: attempt 1 of 3, Needs attention. "Track service · Stopped while writing the update." Reference cafbfbb9-5840-4d04-8c10-35f4d94d7cce. 14.9K credits used.
 - No pull request was created in vaibhav700c/gitlite-docs.
+
+# Completed Track run (vaibhav700c/gitlite#16)
+
+- Thally support fixed the sandbox issue and re-ran attempt 2 of 3 for #16. Result: Ready for review, 25K credits used.
+- Docs PR opened by the thally-labs bot: https://github.com/vaibhav700c/gitlite-docs/pull/1 (branch thally/track-agent-22d1cea6-012f-4277-9c22-d32abfc8ac58, commit fb17ba5). It compared product commits 12449bc and c890207.
+- Files changed (+55/-31): authentication.mdx, guides/errors.mdx, guides/rate-limits.mdx, pagination.mdx, quickstart.mdx, reference/configuration-api.mdx. The docs check passed.
+- Not touched: introduction, guides/webhooks, guides/deployment, changelog, api/*. The api/* pages were already written to link to the pages that own each fact.
+- Merged by vaibhav700c at 2026-09-16T08:51:33Z (merge 5f4fb7b).
+- Afterwards the live site serves the new content, captured in evidence/surfaces/after:
+  - The MCP read_page result for authentication changed from "Put the word `token`" to "Put the word `Bearer`".
+  - pagination.md shows default `20`.
+  - Agent readiness is still 100 (A) across 13 pages.
+- All 49 documentation examples pass against the merged product with GITLITE_AUTH set to Bearer (evidence/product/docs-examples-after-track-merge.md).
+- UI issue: after the merge, the Track page still shows the run as "Ready for review" with a "Review pull request #1" link, not as merged or completed.
